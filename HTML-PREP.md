@@ -10,15 +10,15 @@ A complete, structured collection of HTML interview questions — from fundament
   - [What is the difference between block-level and inline elements?](#what-is-the-difference-between-block-level-and-inline-elements)
   - [What's the difference between the id and class attributes?](#whats-the-difference-between-the-id-and-class-attributes)
   - [What is semantic HTML, and why does it matter?](#what-is-semantic-html-and-why-does-it-matter)
-  - [What is the difference between <div> and <span>?](#what-is-the-difference-between-div-and-span)
-  - [What is the difference between async and defer on a <script> tag?](#what-is-the-difference-between-async-and-defer-on-a-script-tag)
+  - [What is the difference between `<div>` and `<span>`?](#what-is-the-difference-between-div-and-span)
+  - [What is the difference between async and defer on a `<script>` tag?](#what-is-the-difference-between-async-and-defer-on-a-script-tag)
   - [What is the difference between localStorage, sessionStorage, and cookies?](#what-is-the-difference-between-localstorage-sessionstorage-and-cookies)
-  - [What is the purpose of the alt attribute on <img>, and when should it be left empty?](#what-is-the-purpose-of-the-alt-attribute-on-img-and-when-should-it-be-left-empty)
-  - [What is the difference between <link> and <a> tags?](#what-is-the-difference-between-link-and-a-tags)
+  - [What is the purpose of the alt attribute on `<img>`, and when should it be left empty?](#what-is-the-purpose-of-the-alt-attribute-on-img-and-when-should-it-be-left-empty)
+  - [What is the difference between `<link>` and `<a>` tags?](#what-is-the-difference-between-link-and-a-tags)
   - [What is the viewport meta tag, and why is it essential for responsive design?](#what-is-the-viewport-meta-tag-and-why-is-it-essential-for-responsive-design)
   - [What's the difference between an HTML entity like &nbsp; and a regular space?](#whats-the-difference-between-an-html-entity-like-nbsp-and-a-regular-space)
-  - [Why is it recommended to place <script> tags at the end of <body> (or use defer)?](#why-is-it-recommended-to-place-script-tags-at-the-end-of-body-or-use-defer)
-  - [What is the difference between <b>/<i> and <strong>/<em>?](#what-is-the-difference-between-bi-and-strongem)
+  - [Why is it recommended to place `<script>` tags at the end of `<body>` (or use defer)?](#why-is-it-recommended-to-place-script-tags-at-the-end-of-body-or-use-defer)
+  - [What is the difference between `<b>`/`<i>` and `<strong>`/`<em>`?](#what-is-the-difference-between-bi-and-strongem)
   - [What happens if you nest a block-level element inside an inline element?](#what-happens-if-you-nest-a-block-level-element-inside-an-inline-element)
 - [HTML Basics](#html-basics)
   - [What is HTML and what is its role in web development?](#what-is-html-and-what-is-its-role-in-web-development)
@@ -26,64 +26,64 @@ A complete, structured collection of HTML interview questions — from fundament
   - [What is the difference between HTML and XHTML?](#what-is-the-difference-between-html-and-xhtml)
   - [What are void (self-closing) elements? Give examples.](#what-are-void-self-closing-elements-give-examples)
   - [What is the difference between an HTML attribute and a DOM property?](#what-is-the-difference-between-an-html-attribute-and-a-dom-property)
-  - [What is the purpose of the <meta charset="UTF-8"> tag?](#what-is-the-purpose-of-the-meta-charsetutf-8-tag)
+  - [What is the purpose of the `<meta charset="UTF-8">` tag?](#what-is-the-purpose-of-the-meta-charsetutf-8-tag)
   - [What are data attributes (data-*), and what are they used for?](#what-are-data-attributes-data--and-what-are-they-used-for)
   - [What is the difference between HTML4 and HTML5?](#what-is-the-difference-between-html4-and-html5)
-  - [What is the difference between <ol>, <ul>, and <dl>?](#what-is-the-difference-between-ol-ul-and-dl)
-  - [What is the difference between the <head> and <body> sections?](#what-is-the-difference-between-the-head-and-body-sections)
+  - [What is the difference between `<ol>`, `<ul>`, and `<dl>`?](#what-is-the-difference-between-ol-ul-and-dl)
+  - [What is the difference between the `<head>` and `<body>` sections?](#what-is-the-difference-between-the-head-and-body-sections)
   - [How do you include CSS and JavaScript in an HTML document?](#how-do-you-include-css-and-javascript-in-an-html-document)
 - [Semantic HTML & Document Structure](#semantic-html-document-structure)
   - [What are semantic HTML5 elements? Name several.](#what-are-semantic-html5-elements-name-several)
-  - [What is the difference between <section> and <div>?](#what-is-the-difference-between-section-and-div)
-  - [What is the difference between <article> and <section>?](#what-is-the-difference-between-article-and-section)
-  - [What is the purpose of the <main> element, and how many can a page have?](#what-is-the-purpose-of-the-main-element-and-how-many-can-a-page-have)
-  - [What is the difference between <header>/<footer> and <head>/<body>?](#what-is-the-difference-between-headerfooter-and-headbody)
-  - [What is the <nav> element used for?](#what-is-the-nav-element-used-for)
-  - [What is the <figure> and <figcaption> pairing used for?](#what-is-the-figure-and-figcaption-pairing-used-for)
-  - [What is the purpose of heading tags (<h1>–<h6>), and how should they be structured?](#what-is-the-purpose-of-heading-tags-h1h6-and-how-should-they-be-structured)
-  - [What is the difference between <aside> and a regular <div> used for a sidebar?](#what-is-the-difference-between-aside-and-a-regular-div-used-for-a-sidebar)
+  - [What is the difference between `<section>` and `<div>`?](#what-is-the-difference-between-section-and-div)
+  - [What is the difference between `<article>` and `<section>`?](#what-is-the-difference-between-article-and-section)
+  - [What is the purpose of the `<main>` element, and how many can a page have?](#what-is-the-purpose-of-the-main-element-and-how-many-can-a-page-have)
+  - [What is the difference between `<header>`/`<footer>` and `<head>`/`<body>`?](#what-is-the-difference-between-headerfooter-and-headbody)
+  - [What is the `<nav>` element used for?](#what-is-the-nav-element-used-for)
+  - [What is the `<figure>` and `<figcaption>` pairing used for?](#what-is-the-figure-and-figcaption-pairing-used-for)
+  - [What is the purpose of heading tags (`<h1>`–`<h6>`), and how should they be structured?](#what-is-the-purpose-of-heading-tags-h1h6-and-how-should-they-be-structured)
+  - [What is the difference between `<aside>` and a regular `<div>` used for a sidebar?](#what-is-the-difference-between-aside-and-a-regular-div-used-for-a-sidebar)
   - [How does using semantic HTML affect SEO?](#how-does-using-semantic-html-affect-seo)
 - [Forms & Input Elements](#forms-input-elements)
-  - [What is the purpose of the <form> element, and what are its key attributes?](#what-is-the-purpose-of-the-form-element-and-what-are-its-key-attributes)
+  - [What is the purpose of the `<form>` element, and what are its key attributes?](#what-is-the-purpose-of-the-form-element-and-what-are-its-key-attributes)
   - [What is the difference between GET and POST as form submission methods?](#what-is-the-difference-between-get-and-post-as-form-submission-methods)
   - [What are some common HTML5 input types, and why do they matter?](#what-are-some-common-html5-input-types-and-why-do-they-matter)
   - [What is the difference between the placeholder and value attributes on an input?](#what-is-the-difference-between-the-placeholder-and-value-attributes-on-an-input)
-  - [What is the purpose of the <label> element, and why is it important?](#what-is-the-purpose-of-the-label-element-and-why-is-it-important)
+  - [What is the purpose of the `<label>` element, and why is it important?](#what-is-the-purpose-of-the-label-element-and-why-is-it-important)
   - [What is the difference between disabled and readonly on a form input?](#what-is-the-difference-between-disabled-and-readonly-on-a-form-input)
   - [How does built-in HTML form validation work, and how do you customize it?](#how-does-built-in-html-form-validation-work-and-how-do-you-customize-it)
-  - [What is the difference between a <select> dropdown and a set of <input type="radio"> buttons?](#what-is-the-difference-between-a-select-dropdown-and-a-set-of-input-typeradio-buttons)
-  - [What is the purpose of the <fieldset> and <legend> elements?](#what-is-the-purpose-of-the-fieldset-and-legend-elements)
+  - [What is the difference between a `<select>` dropdown and a set of `<input type="radio">` buttons?](#what-is-the-difference-between-a-select-dropdown-and-a-set-of-input-typeradio-buttons)
+  - [What is the purpose of the `<fieldset>` and `<legend>` elements?](#what-is-the-purpose-of-the-fieldset-and-legend-elements)
   - [How do you handle file uploads in an HTML form?](#how-do-you-handle-file-uploads-in-an-html-form)
-  - [What is the difference between <button type="submit">, type="button", and type="reset"?](#what-is-the-difference-between-button-typesubmit-typebutton-and-typereset)
+  - [What is the difference between `<button type="submit">`, type="button", and type="reset"?](#what-is-the-difference-between-button-typesubmit-typebutton-and-typereset)
   - [What is the autocomplete attribute, and why does it matter?](#what-is-the-autocomplete-attribute-and-why-does-it-matter)
 - [Tables](#tables)
   - [What are the basic building blocks of an HTML table?](#what-are-the-basic-building-blocks-of-an-html-table)
-  - [What is the purpose of <thead>, <tbody>, and <tfoot>?](#what-is-the-purpose-of-thead-tbody-and-tfoot)
+  - [What is the purpose of `<thead>`, `<tbody>`, and `<tfoot>`?](#what-is-the-purpose-of-thead-tbody-and-tfoot)
   - [What do the colspan and rowspan attributes do?](#what-do-the-colspan-and-rowspan-attributes-do)
   - [How do you properly associate header cells with data cells for accessibility?](#how-do-you-properly-associate-header-cells-with-data-cells-for-accessibility)
   - [Should tables be used for page layout?](#should-tables-be-used-for-page-layout)
-  - [What is the <caption> element used for in a table?](#what-is-the-caption-element-used-for-in-a-table)
+  - [What is the `<caption>` element used for in a table?](#what-is-the-caption-element-used-for-in-a-table)
   - [How would you make a large table responsive on mobile?](#how-would-you-make-a-large-table-responsive-on-mobile)
   - [What is the difference between border-collapse: collapse and default table borders?](#what-is-the-difference-between-border-collapse-collapse-and-default-table-borders)
 - [Media & Graphics](#media-graphics)
   - [How do you embed an image in HTML, and what are the important attributes?](#how-do-you-embed-an-image-in-html-and-what-are-the-important-attributes)
-  - [What is the purpose of the <picture> element?](#what-is-the-purpose-of-the-picture-element)
-  - [What is the srcset attribute used for, and how does it differ from <picture>?](#what-is-the-srcset-attribute-used-for-and-how-does-it-differ-from-picture)
+  - [What is the purpose of the `<picture>` element?](#what-is-the-purpose-of-the-picture-element)
+  - [What is the srcset attribute used for, and how does it differ from `<picture>`?](#what-is-the-srcset-attribute-used-for-and-how-does-it-differ-from-picture)
   - [How do you embed video and audio natively in HTML5?](#how-do-you-embed-video-and-audio-natively-in-html5)
   - [What is the purpose of the loading="lazy" attribute on images?](#what-is-the-purpose-of-the-loadinglazy-attribute-on-images)
-  - [What is the <canvas> element used for?](#what-is-the-canvas-element-used-for)
-  - [What is the difference between <canvas> and SVG for graphics?](#what-is-the-difference-between-canvas-and-svg-for-graphics)
-  - [What are common video/audio formats, and why do multiple <source> tags matter?](#what-are-common-videoaudio-formats-and-why-do-multiple-source-tags-matter)
+  - [What is the `<canvas>` element used for?](#what-is-the-canvas-element-used-for)
+  - [What is the difference between `<canvas>` and SVG for graphics?](#what-is-the-difference-between-canvas-and-svg-for-graphics)
+  - [What are common video/audio formats, and why do multiple `<source>` tags matter?](#what-are-common-videoaudio-formats-and-why-do-multiple-source-tags-matter)
   - [How would you make an image accessible when it's purely decorative?](#how-would-you-make-an-image-accessible-when-its-purely-decorative)
   - [What is the object-fit CSS property, and why is it commonly used with images/video?](#what-is-the-object-fit-css-property-and-why-is-it-commonly-used-with-imagesvideo)
 - [Links, Navigation & Metadata](#links-navigation-metadata)
-  - [What is the difference between absolute and relative URLs in an <a> href?](#what-is-the-difference-between-absolute-and-relative-urls-in-an-a-href)
+  - [What is the difference between absolute and relative URLs in an `<a>` href?](#what-is-the-difference-between-absolute-and-relative-urls-in-an-a-href)
   - [What does target="_blank" do, and what security consideration comes with it?](#what-does-targetblank-do-and-what-security-consideration-comes-with-it)
   - [How do you create an in-page anchor link (jump to a section)?](#how-do-you-create-an-in-page-anchor-link-jump-to-a-section)
   - [What is the purpose of the rel attribute on a link, and what are some common values?](#what-is-the-purpose-of-the-rel-attribute-on-a-link-and-what-are-some-common-values)
   - [What is a canonical URL, and why is it important for SEO?](#what-is-a-canonical-url-and-why-is-it-important-for-seo)
   - [What are Open Graph meta tags, and what are they used for?](#what-are-open-graph-meta-tags-and-what-are-they-used-for)
-  - [What is the purpose of the <meta name="description"> tag?](#what-is-the-purpose-of-the-meta-namedescription-tag)
+  - [What is the purpose of the `<meta name="description">` tag?](#what-is-the-purpose-of-the-meta-namedescription-tag)
   - [How do you create a favicon, and where does it go in the HTML?](#how-do-you-create-a-favicon-and-where-does-it-go-in-the-html)
   - [What is the difference between a link's default, visited, hover, and active states?](#what-is-the-difference-between-a-links-default-visited-hover-and-active-states)
   - [What is a breadcrumb, and how would you mark it up semantically?](#what-is-a-breadcrumb-and-how-would-you-mark-it-up-semantically)
@@ -170,11 +170,11 @@ These come up in almost every HTML interview. If you're short on time, start her
 **Answer:** Semantic HTML uses elements that describe their meaning (`<header>`, `<article>`, `<nav>`) instead of generic containers (`<div>`, `<span>`) for everything. It improves accessibility (screen readers rely on semantic structure to navigate), SEO (search engines weigh it), and overall code readability.
 
 <a id="what-is-the-difference-between-div-and-span"></a>
-### Q: What is the difference between <div> and <span>?
+### Q: What is the difference between `<div>` and `<span>`?
 **Answer:** Both are generic, non-semantic containers, but `<div>` is block-level (used to group larger sections of content) while `<span>` is inline (used to wrap a small piece of text within a sentence or line).
 
 <a id="what-is-the-difference-between-async-and-defer-on-a-script-tag"></a>
-### Q: What is the difference between async and defer on a <script> tag?
+### Q: What is the difference between async and defer on a `<script>` tag?
 **Answer:** Both let a script download without blocking HTML parsing. `async` executes the script as soon as it finishes downloading — order isn't guaranteed relative to other scripts, and it can interrupt parsing mid-way. `defer` waits until HTML parsing is fully complete before executing, and multiple deferred scripts always run in the order they appear in the document.
 
 <a id="what-is-the-difference-between-localstorage-sessionstorage-and-cookies"></a>
@@ -182,11 +182,11 @@ These come up in almost every HTML interview. If you're short on time, start her
 **Answer:** `localStorage` persists with no expiration until explicitly cleared, scoped per origin. `sessionStorage` persists only for the page session and is cleared when the tab closes, scoped per tab. Cookies are much smaller (~4KB), can have an expiration date, and — unlike the other two — are automatically sent to the server with every HTTP request, which matters for both performance and security.
 
 <a id="what-is-the-purpose-of-the-alt-attribute-on-img-and-when-should-it-be-left-empty"></a>
-### Q: What is the purpose of the alt attribute on <img>, and when should it be left empty?
+### Q: What is the purpose of the alt attribute on `<img>`, and when should it be left empty?
 **Answer:** `alt` provides alternative text describing an image for screen readers and for when the image fails to load. It should meaningfully describe the image's content or purpose — not just say "image of...". Purely decorative images that add no informational value should use an empty `alt=""` so screen readers skip them, rather than omitting the attribute entirely (which some screen readers announce as "unlabeled image").
 
 <a id="what-is-the-difference-between-link-and-a-tags"></a>
-### Q: What is the difference between <link> and <a> tags?
+### Q: What is the difference between `<link>` and `<a>` tags?
 **Answer:** `<a>` creates a clickable hyperlink for navigation. `<link>` lives inside `<head>` and defines relationships between the document and external resources — most commonly stylesheets (`rel="stylesheet"`), but also favicons, preconnect hints, or canonical URLs. `<link>` has no visible content of its own.
 
 <a id="what-is-the-viewport-meta-tag-and-why-is-it-essential-for-responsive-design"></a>
@@ -198,11 +198,11 @@ These come up in almost every HTML interview. If you're short on time, start her
 **Answer:** `&nbsp;` (non-breaking space) prevents a line break at that point — keeping two words together, e.g. "10 mph" — and, unlike regular whitespace, multiple consecutive `&nbsp;` won't be collapsed into a single space by the browser.
 
 <a id="why-is-it-recommended-to-place-script-tags-at-the-end-of-body-or-use-defer"></a>
-### Q: Why is it recommended to place <script> tags at the end of <body> (or use defer)?
+### Q: Why is it recommended to place `<script>` tags at the end of `<body>` (or use defer)?
 **Answer:** Script tags block HTML parsing by default while they download and execute. Placing them at the end of `<body>`, or using `defer`, lets the browser parse and render the visible page first, improving perceived load time since the script no longer holds up rendering everything below it.
 
 <a id="what-is-the-difference-between-bi-and-strongem"></a>
-### Q: What is the difference between <b>/<i> and <strong>/<em>?
+### Q: What is the difference between `<b>`/`<i>` and `<strong>`/`<em>`?
 **Answer:** `<b>` and `<i>` are purely presentational (bold/italic with no semantic meaning). `<strong>` conveys strong importance and `<em>` conveys emphasis — both are semantic and are announced differently by screen readers, even though visually they typically render the same as `<b>`/`<i>`.
 
 <a id="what-happens-if-you-nest-a-block-level-element-inside-an-inline-element"></a>
@@ -249,7 +249,7 @@ These come up in almost every HTML interview. If you're short on time, start her
 **Answer:** An attribute is defined in the markup itself (e.g. `value="hello"` in the source) and represents the initial state. A property is the corresponding value on the live DOM object in JavaScript, which can change independently after the page loads — typing into an input changes its `value` property, but not the original `value` attribute in the source markup.
 
 <a id="what-is-the-purpose-of-the-meta-charsetutf-8-tag"></a>
-### Q: What is the purpose of the <meta charset="UTF-8"> tag?
+### Q: What is the purpose of the `<meta charset="UTF-8">` tag?
 **Answer:** It declares the character encoding used for the document, ensuring special characters, accented letters, and symbols display correctly across browsers. UTF-8 is the near-universal standard recommended for virtually all web pages.
 
 <a id="what-are-data-attributes-data--and-what-are-they-used-for"></a>
@@ -269,11 +269,11 @@ element.dataset.userId; // "42"
 **Answer:** HTML5 introduced semantic elements (`<header>`, `<footer>`, `<article>`, `<section>`), native multimedia support (`<audio>`, `<video>`) without plugins like Flash, new form input types (`email`, `date`, `range`), the `<canvas>` element, and APIs like localStorage, geolocation, and drag-and-drop. It also simplified the doctype down to just `<!DOCTYPE html>`.
 
 <a id="what-is-the-difference-between-ol-ul-and-dl"></a>
-### Q: What is the difference between <ol>, <ul>, and <dl>?
+### Q: What is the difference between `<ol>`, `<ul>`, and `<dl>`?
 **Answer:** `<ul>` is an unordered (bulleted) list and `<ol>` is an ordered (numbered) list — both hold `<li>` items. `<dl>` is a description list, pairing terms (`<dt>`) with descriptions (`<dd>`), useful for glossaries or key-value content.
 
 <a id="what-is-the-difference-between-the-head-and-body-sections"></a>
-### Q: What is the difference between the <head> and <body> sections?
+### Q: What is the difference between the `<head>` and `<body>` sections?
 **Answer:** `<head>` contains metadata not directly rendered — title, character encoding, linked stylesheets/scripts, and meta tags for SEO/social sharing. `<body>` contains everything actually visible and rendered to the user.
 
 <a id="how-do-you-include-css-and-javascript-in-an-html-document"></a>
@@ -290,35 +290,35 @@ element.dataset.userId; // "42"
 **Answer:** Semantic elements clearly describe their meaning to both the browser and developers. Common ones: `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`, `<figure>`/`<figcaption>`, `<time>`, `<mark>`.
 
 <a id="what-is-the-difference-between-section-and-div"></a>
-### Q: What is the difference between <section> and <div>?
+### Q: What is the difference between `<section>` and `<div>`?
 **Answer:** `<section>` is a semantic element representing a thematic grouping of content, typically with its own heading — it conveys meaning to assistive technology and helps outline document structure. `<div>` is a purely generic container used only for styling/scripting hooks, with no inherent meaning.
 
 <a id="what-is-the-difference-between-article-and-section"></a>
-### Q: What is the difference between <article> and <section>?
+### Q: What is the difference between `<article>` and `<section>`?
 **Answer:** `<article>` represents self-contained content that could be distributed or reused independently — a blog post, a news story, a forum comment. `<section>` groups related content within a page or article, often with a heading, but doesn't imply that same standalone reusability.
 
 <a id="what-is-the-purpose-of-the-main-element-and-how-many-can-a-page-have"></a>
-### Q: What is the purpose of the <main> element, and how many can a page have?
+### Q: What is the purpose of the `<main>` element, and how many can a page have?
 **Answer:** `<main>` wraps a page's dominant, unique content, excluding repeated elements like headers, nav, and footers. There should be only one visible `<main>` per page — it helps assistive technology and "skip to content" links jump straight to the primary content.
 
 <a id="what-is-the-difference-between-headerfooter-and-headbody"></a>
-### Q: What is the difference between <header>/<footer> and <head>/<body>?
+### Q: What is the difference between `<header>`/`<footer>` and `<head>`/`<body>`?
 **Answer:** `<head>`/`<body>` are top-level document structure — metadata vs. rendered content. `<header>`/`<footer>` are semantic content elements that live inside `<body>` (and can appear multiple times, e.g. a header for each `<article>`) representing introductory or closing content for a page or a section.
 
 <a id="what-is-the-nav-element-used-for"></a>
-### Q: What is the <nav> element used for?
+### Q: What is the `<nav>` element used for?
 **Answer:** `<nav>` wraps a major block of navigation links — the main site menu, a table of contents, breadcrumbs. Not every group of links needs `<nav>` — it's meant for significant, page-level navigation blocks, not every link on the page.
 
 <a id="what-is-the-figure-and-figcaption-pairing-used-for"></a>
-### Q: What is the <figure> and <figcaption> pairing used for?
+### Q: What is the `<figure>` and `<figcaption>` pairing used for?
 **Answer:** `<figure>` groups self-contained content — typically an image, diagram, or code snippet — that could be moved elsewhere without affecting the main flow, and `<figcaption>` provides its caption, semantically linked to the figure.
 
 <a id="what-is-the-purpose-of-heading-tags-h1h6-and-how-should-they-be-structured"></a>
-### Q: What is the purpose of heading tags (<h1>–<h6>), and how should they be structured?
+### Q: What is the purpose of heading tags (`<h1>`–`<h6>`), and how should they be structured?
 **Answer:** Heading tags build a hierarchical outline of a page's content, used by screen readers to navigate and by search engines to understand structure. Best practice: one `<h1>` per page, and don't skip heading levels (e.g. `<h2>` straight to `<h4>`) purely for visual sizing — use CSS for that instead.
 
 <a id="what-is-the-difference-between-aside-and-a-regular-div-used-for-a-sidebar"></a>
-### Q: What is the difference between <aside> and a regular <div> used for a sidebar?
+### Q: What is the difference between `<aside>` and a regular `<div>` used for a sidebar?
 **Answer:** `<aside>` semantically marks content tangentially related to the surrounding content — a sidebar, a pull quote, related links — which assistive technology can identify and optionally skip. A generic `<div>` conveys none of that meaning even if it looks like a sidebar visually.
 
 <a id="how-does-using-semantic-html-affect-seo"></a>
@@ -331,7 +331,7 @@ element.dataset.userId; // "42"
 ## Forms & Input Elements
 
 <a id="what-is-the-purpose-of-the-form-element-and-what-are-its-key-attributes"></a>
-### Q: What is the purpose of the <form> element, and what are its key attributes?
+### Q: What is the purpose of the `<form>` element, and what are its key attributes?
 **Answer:** `<form>` wraps a set of interactive controls for submitting data. Key attributes: `action` (the URL data is sent to), `method` (`GET` or `POST`), and `enctype` (how data is encoded, e.g. `multipart/form-data` for file uploads).
 
 <a id="what-is-the-difference-between-get-and-post-as-form-submission-methods"></a>
@@ -352,7 +352,7 @@ element.dataset.userId; // "42"
 **Answer:** `placeholder` shows greyed-out hint text inside an empty input that disappears once the user types — it's never submitted as data and shouldn't replace a proper `<label>`. `value` sets (or holds) the input's actual current content, which is submitted with the form.
 
 <a id="what-is-the-purpose-of-the-label-element-and-why-is-it-important"></a>
-### Q: What is the purpose of the <label> element, and why is it important?
+### Q: What is the purpose of the `<label>` element, and why is it important?
 **Answer:** `<label>` associates descriptive text with a form control, improving accessibility (screen readers announce the label when the input is focused) and usability (clicking the label focuses or toggles the associated input). Association is done via `for` matching the input's `id`, or by wrapping the input inside the label.
 
 **Example:**
@@ -370,11 +370,11 @@ element.dataset.userId; // "42"
 **Answer:** Attributes like `required`, `pattern`, `minlength`/`maxlength`, and `min`/`max` trigger the browser's native validation before submission, showing default error messages and applying `:valid`/`:invalid` CSS pseudo-classes. Customize the message via the Constraint Validation API — `input.setCustomValidity('message')` in JavaScript.
 
 <a id="what-is-the-difference-between-a-select-dropdown-and-a-set-of-input-typeradio-buttons"></a>
-### Q: What is the difference between a <select> dropdown and a set of <input type="radio"> buttons?
+### Q: What is the difference between a `<select>` dropdown and a set of `<input type="radio">` buttons?
 **Answer:** Both let a user pick one option from a set, but `<select>` is more compact and better for many options (hidden until clicked), while radio buttons show every option at once — better for a small number of choices where seeing everything at a glance matters.
 
 <a id="what-is-the-purpose-of-the-fieldset-and-legend-elements"></a>
-### Q: What is the purpose of the <fieldset> and <legend> elements?
+### Q: What is the purpose of the `<fieldset>` and `<legend>` elements?
 **Answer:** `<fieldset>` groups related form controls together (with a border by default), and `<legend>` provides a caption for that group — useful for accessibility, e.g. grouping a set of radio buttons under a meaningful label like "Preferred contact method."
 
 <a id="how-do-you-handle-file-uploads-in-an-html-form"></a>
@@ -382,7 +382,7 @@ element.dataset.userId; // "42"
 **Answer:** Use `<input type="file">`, and set the form's `enctype="multipart/form-data"` (required for binary file data to be sent correctly) with `method="post"`. The `accept` attribute can restrict allowed file types (e.g. `accept="image/*"`), and `multiple` allows selecting more than one file.
 
 <a id="what-is-the-difference-between-button-typesubmit-typebutton-and-typereset"></a>
-### Q: What is the difference between <button type="submit">, type="button", and type="reset"?
+### Q: What is the difference between `<button type="submit">`, type="button", and type="reset"?
 **Answer:** `type="submit"` (the default inside a form) submits the form. `type="button"` does nothing on its own — meant for custom JavaScript-driven behavior. `type="reset"` clears all fields back to their initial values — rarely used today since it can accidentally wipe user input.
 
 <a id="what-is-the-autocomplete-attribute-and-why-does-it-matter"></a>
@@ -399,7 +399,7 @@ element.dataset.userId; // "42"
 **Answer:** `<table>` is the container, `<tr>` defines a row, `<td>` defines a standard data cell, and `<th>` defines a header cell — bold and centered by default, and semantically marked as a header for accessibility.
 
 <a id="what-is-the-purpose-of-thead-tbody-and-tfoot"></a>
-### Q: What is the purpose of <thead>, <tbody>, and <tfoot>?
+### Q: What is the purpose of `<thead>`, `<tbody>`, and `<tfoot>`?
 **Answer:** They group a table's rows into header, body, and footer sections respectively. This isn't just cosmetic — it helps assistive technology understand table structure, and can let `<tbody>` scroll independently of a fixed `<thead>` in some layouts.
 
 <a id="what-do-the-colspan-and-rowspan-attributes-do"></a>
@@ -420,7 +420,7 @@ element.dataset.userId; // "42"
 **Answer:** No — using tables purely for visual layout instead of tabular data is an outdated, pre-CSS-era practice. It creates accessibility problems (screen readers announce layout tables as if they held data, confusing users) and produces inflexible, hard-to-maintain markup. Modern layout should use CSS Flexbox or Grid.
 
 <a id="what-is-the-caption-element-used-for-in-a-table"></a>
-### Q: What is the <caption> element used for in a table?
+### Q: What is the `<caption>` element used for in a table?
 **Answer:** `<caption>` provides a title or description for the whole table, placed as the first child inside `<table>`. Screen readers announce it before the table content, giving context about what the data represents.
 
 <a id="how-would-you-make-a-large-table-responsive-on-mobile"></a>
@@ -441,7 +441,7 @@ element.dataset.userId; // "42"
 **Answer:** `<img src="photo.jpg" alt="Description" width="600" height="400">`. `src` is the image path, `alt` is required alternative text for accessibility and fallback, and `width`/`height` help the browser reserve space before the image loads, reducing layout shift.
 
 <a id="what-is-the-purpose-of-the-picture-element"></a>
-### Q: What is the purpose of the <picture> element?
+### Q: What is the purpose of the `<picture>` element?
 **Answer:** `<picture>` lets you serve different image sources based on conditions like viewport width or supported formats, using nested `<source>` elements with an `<img>` fallback — useful for art direction (different crops for mobile vs. desktop) or serving modern formats like WebP/AVIF with a fallback.
 
 **Example:**
@@ -453,7 +453,7 @@ element.dataset.userId; // "42"
 ```
 
 <a id="what-is-the-srcset-attribute-used-for-and-how-does-it-differ-from-picture"></a>
-### Q: What is the srcset attribute used for, and how does it differ from <picture>?
+### Q: What is the srcset attribute used for, and how does it differ from `<picture>`?
 **Answer:** `srcset` (on `<img>` directly) lets the browser choose the best resolution of the *same* image from a list of candidates based on screen density/size — resolution switching. `<picture>` handles more complex cases, like serving genuinely different images or formats, not just different resolutions of the same one.
 
 **Example:**
@@ -479,15 +479,15 @@ element.dataset.userId; // "42"
 **Answer:** It tells the browser to defer loading an offscreen image until the user scrolls near it, reducing initial page load time and bandwidth usage for images below the fold — a native alternative to JavaScript-based lazy-loading libraries.
 
 <a id="what-is-the-canvas-element-used-for"></a>
-### Q: What is the <canvas> element used for?
+### Q: What is the `<canvas>` element used for?
 **Answer:** `<canvas>` provides a blank, scriptable drawing surface for rendering graphics, animations, or game visuals pixel-by-pixel via JavaScript (typically the Canvas 2D API or WebGL) — unlike SVG, canvas content isn't part of the DOM and can't be styled per shape with CSS selectors.
 
 <a id="what-is-the-difference-between-canvas-and-svg-for-graphics"></a>
-### Q: What is the difference between <canvas> and SVG for graphics?
+### Q: What is the difference between `<canvas>` and SVG for graphics?
 **Answer:** Canvas is raster-based and imperative — you draw shapes via JS calls and the browser doesn't track individual shapes afterward, making it well suited to complex, frequently-redrawn scenes like games. SVG is vector-based and declarative — each shape is an actual DOM element you can style with CSS and attach event listeners to, better suited to icons, diagrams, and graphics that need to scale without quality loss.
 
 <a id="what-are-common-videoaudio-formats-and-why-do-multiple-source-tags-matter"></a>
-### Q: What are common video/audio formats, and why do multiple <source> tags matter?
+### Q: What are common video/audio formats, and why do multiple `<source>` tags matter?
 **Answer:** Common formats: MP4 (H.264) and WebM for video; MP3 and OGG for audio. Different browsers have historically supported different formats, so providing multiple `<source>` elements lets the browser pick the first one it supports, improving cross-browser compatibility.
 
 <a id="how-would-you-make-an-image-accessible-when-its-purely-decorative"></a>
@@ -504,7 +504,7 @@ element.dataset.userId; // "42"
 ## Links, Navigation & Metadata
 
 <a id="what-is-the-difference-between-absolute-and-relative-urls-in-an-a-href"></a>
-### Q: What is the difference between absolute and relative URLs in an <a> href?
+### Q: What is the difference between absolute and relative URLs in an `<a>` href?
 **Answer:** An absolute URL includes the full address (`https://example.com/page`) and works regardless of the current page's location. A relative URL (`/page`, `../page`, `page.html`) is resolved relative to the current document's location, and breaks if the file structure changes without updating the link.
 
 <a id="what-does-targetblank-do-and-what-security-consideration-comes-with-it"></a>
@@ -540,7 +540,7 @@ element.dataset.userId; // "42"
 ```
 
 <a id="what-is-the-purpose-of-the-meta-namedescription-tag"></a>
-### Q: What is the purpose of the <meta name="description"> tag?
+### Q: What is the purpose of the `<meta name="description">` tag?
 **Answer:** It provides a short summary of the page's content, which search engines often display as the snippet text under the page title in results. It doesn't directly affect ranking but strongly influences click-through rate.
 
 <a id="how-do-you-create-a-favicon-and-where-does-it-go-in-the-html"></a>
