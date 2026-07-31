@@ -393,7 +393,7 @@ myEmitter.emit('event');
 
 Answer: Streams are an abstract interface in Node.js for working with streaming data. They are a way to handle reading/writing files, network communications, or any kind of end-to-end information exchange in a more efficient manner, especially when dealing with large amounts of data. Streams can be readable, writable, duplex (both readable and writable), or transform (duplex streams that can modify data as it passes through). They reduce memory usage and improve performance by processing data in chunks.
 
-![Node.js Streams Diagram](./streams.png)
+<img src="./images/streams.png" width="700" >
 
 ### Q: What is the `path` module used for?
 
@@ -1546,7 +1546,7 @@ Answer: Load balancing is the process of distributing incoming network traffic a
 
 Answer: Microservices architecture is an architectural style that structures an application as a collection of loosely coupled, independently deployable services. Each service is typically responsible for a specific business capability, communicates with others via lightweight mechanisms (e.g., HTTP APIs, message queues), and can be developed, deployed, and scaled independently. This contrasts with monolithic architectures where all components are tightly coupled.
 
-![Microservices Architecture Diagram](./microservices.png)
+<img src="images/microservices.png" width="700">
 
 ### Q: How do you use a reverse proxy with Node.js?
 
