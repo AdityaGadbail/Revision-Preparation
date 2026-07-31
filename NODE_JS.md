@@ -247,7 +247,7 @@ Answer: Node.js is an open-source, cross-platform JavaScript runtime environment
 ### Q: Explain the Node.js Event Loop.
 
 Answer: The Node.js Event Loop is a core component that handles asynchronous operations. It continuously checks for tasks in the call stack and moves them to the event queue. Once the call stack is empty, it processes tasks from the event queue. This non-blocking I/O model allows Node.js to handle many concurrent connections efficiently without creating a new thread for each.
-<img src="./images/event_loop.png" width="700" height="350">
+<img src="./images/event_loop.png" width="700" height="700">
 
 ### Q: What is the purpose of `package.json`?
 
