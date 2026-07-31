@@ -4,7 +4,7 @@ This is a complete revision guide for JavaScript interviews, covering everything
 
 ## 🔥 Most Asked / Tricky Questions
 
-- [Q: What is type coercion in JavaScript? Provide an example.](#q-What-is-type-coercion-in-JavaScript?-Provide-an-example-)
+- [Q: What is type coercion in JavaScript? Provide an example.](#q-what-is-type-coercion-in-javascript?-provide-an-example.)
   
 - [Q: Explain the difference between `==` and `===`.](#q-explain-the-difference-between--and-)
 
