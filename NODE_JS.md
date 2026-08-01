@@ -5,6 +5,21 @@ A comprehensive revision guide for Node.js interviews, covering everything from 
 ## Table of Contents
 
 - [🔥 Most Asked / Tricky Questions](#-most-asked--tricky-questions)
+  - [Explain the Node.js Event Loop.](#explain-the-nodejs-event-loop)
+  - [Difference between process.nextTick() and setImmediate().](#difference-between-processnexttick-and-setimmediate)
+  - [How does require() work?](#how-does-require-work)
+  - [What are streams and why are they important?](#what-are-streams-and-why-are-they-important)
+  - [Explain middleware in Express.js.](#explain-middleware-in-expressjs)
+  - [What is callback hell and how to avoid it?](#what-is-callback-hell-and-how-to-avoid-it)
+  - [How do you handle errors in asynchronous code?](#how-do-you-handle-errors-in-asynchronous-code)
+  - [Difference between cluster and worker_threads.](#difference-between-cluster-and-worker_threads)
+  - [What is a microservice architecture?](#what-is-a-microservice-architecture)
+  - [How do you secure a Node.js application?](#how-do-you-secure-a-nodejs-application)
+  - [What is the V8 JavaScript engine?](#what-is-the-v8-javascript-engine)
+  - [Explain Buffer class.](#explain-buffer-class)
+  - [How do you optimize Node.js application performance?](#how-do-you-optimize-nodejs-application-performance)
+  - [What are unhandled rejections and uncaught exceptions?](#what-are-unhandled-rejections-and-uncaught-exceptions)
+  - [How do you test asynchronous code?](#how-do-you-test-asynchronous-code)
 
 - [Node.js Basics](#nodejs-basics)
   - [Q: What is Node.js?](#q-what-is-nodejs)
@@ -206,35 +221,195 @@ A comprehensive revision guide for Node.js interviews, covering everything from 
 
 ## 🔥 Most Asked / Tricky Questions
 
-- [Explain the Node.js Event Loop.](#explain-the-nodejs-event-loop)
+### Explain the Node.js Event Loop.
 
-- [Difference between `process.nextTick()` and `setImmediate()`.](#difference-between-processnexttick-and-setimmediate)
+Answer: The Node.js Event Loop is a core component that handles asynchronous operations. It continuously checks for tasks in the call stack and moves them to the event queue. Once the call stack is empty, it processes tasks from the event queue. This non-blocking I/O model allows Node.js to handle many concurrent connections efficiently without creating a new thread for each.<img src="./images/event_loop.png" width="700" height="1000">
 
-- [How does `require()` work?](#how-does-require-work)
+### Difference between process.nextTick() and setImmediate().
 
-- [What are streams and why are they important?](#what-are-streams-and-why-are-they-important)
+Answer: Both `process.nextTick()` and `setImmediate()` are used for scheduling asynchronous code. `process.nextTick()` callbacks are executed immediately after the current operation completes, before any I/O or timer events. `setImmediate()` callbacks are executed in thecheck phase of the event loop, after `process.nextTick()` and I/O events. `process.nextTick()` has higher priority and runs before `setImmediate()`.
 
-- [Explain middleware in Express.js.](#explain-middleware-in-expressjs)
+### How does require() work?
 
-- [What is callback hell and how to avoid it?](#what-is-callback-hell-and-how-to-avoid-it)
+Answer: CommonJS is a module format used in Node.js for organizing and encapsulating code. Each file is treated as a separate module, and variables/functions defined within a module are private unless explicitly exported using `module.exports` or `exports`. Modules are imported using the `require()` function. This synchronous loading mechanism is suitable for server-side environments.
 
-- [How do you handle errors in asynchronous code?](#how-do-you-handle-errors-in-asynchronous-code)
+### What are streams and why are they important?
 
-- [Difference between `cluster` and `worker_threads`.](#difference-between-cluster-and-worker_threads)
+Answer: Streams are an abstract interface in Node.js for working with streaming data. They are a way to handle reading/writing files, network communications, or any kind of end-to-end information exchange in a more efficient manner, especially when dealing with large amounts of data. Streams can be readable, writable, duplex (both readable and writable), or transform (duplex streams that can modify data as it passes through). They reduce memory usage and improve performance by processing data in chunks.
 
-- [What is a microservice architecture?](#what-is-a-microservice-architecture)
+<img src="./images/streams.png" width="700" >
 
-- [How do you secure a Node.js application?](#how-do-you-secure-a-nodejs-application)
+### Explain middleware in Express.js.
 
-- [What is the V8 JavaScript engine?](#what-is-the-v8-javascript-engine)
+Answer: Middleware functions are functions that have access to the `request` object (`req`), the `response` object (`res`), and the `next` middleware function in the application's request-response cycle. They can execute any code, make changes to the request and response objects, end the request-response cycle, or call the next middleware in the stack. Common uses include logging, authentication, body parsing, and error handling.
 
-- [Explain `Buffer` class.](#explain-buffer-class)
+Example:
 
-- [How do you optimize Node.js application performance?](#how-do-you-optimize-nodejs-application-performance)
+```javascript
+const express = require('express');
+const app = express();
 
-- [What are unhandled rejections and uncaught exceptions?](#what-are-unhandled-rejections-and-uncaught-exceptions)
+// A simple logger middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url} at ${new Date()}`);
+  next(); // Pass control to the next middleware function
+});
 
-- [How do you test asynchronous code?](#how-do-you-test-asynchronous-code)
+app.get('/', (req, res) => {
+  res.send('Hello from Express!');
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+```
+
+### What is callback hell and how to avoid it?
+
+Answer: Callback hell (also known as the pyramid of doom) occurs when multiple nested asynchronous operations are handled with callbacks, leading to deeply indented, hard-to-read, and difficult-to-maintain code. It makes error handling and control flow complex. It can be avoided by using Promises, `async/await`, named functions, or event emitters.
+
+Example (Callback Hell):
+
+```javascript
+fs.readFile('file1.txt', 'utf8', (err, data1) => {
+  if (err) return console.error(err);
+  fs.readFile('file2.txt', 'utf8', (err, data2) => {
+    if (err) return console.error(err);
+    fs.readFile('file3.txt', 'utf8', (err, data3) => {
+      if (err) return console.error(err);
+      console.log(data1, data2, data3);
+    });
+  });
+});
+```
+
+Example (Avoiding with `async/await`):
+
+```javascript
+const util = require('util');
+const readFilePromise = util.promisify(fs.readFile);
+
+async function readFiles() {
+  try {
+    const data1 = await readFilePromise('file1.txt', 'utf8');
+    const data2 = await readFilePromise('file2.txt', 'utf8');
+    const data3 = await readFilePromise('file3.txt', 'utf8');
+    console.log(data1, data2, data3);
+  } catch (err) {
+    console.error(err);
+  }
+}
+readFiles();
+```
+
+### How do you handle errors in asynchronous code?
+
+Answer: Error handling in Node.js is crucial for building robust applications. It involves using `try...catch` blocks for synchronous code, handling errors passed to callbacks in asynchronous operations, using `.catch()` with Promises, and implementing global error handlers for unhandled exceptions and rejections. Proper error handling prevents application crashes and provides meaningful feedback.
+
+### Difference between cluster and worker_threads.
+
+Answer:
+
+- **Cluster**: Spawns multiple worker processes that share the same port. Useful for scaling across multiple CPU cores.
+
+- **Worker Threads**: Allows running multiple threads within a single process. Useful for CPU-intensive tasks without blocking the main event loop.
+
+### What is a microservice architecture?
+
+Answer: Microservices architecture is an architectural style that structures an application as a collection of loosely coupled, independently deployable services. Each service is typically responsible for a specific business capability, communicates with others via lightweight mechanisms (e.g., HTTP APIs, message queues), and can be developed, deployed, and scaled independently. This contrasts with monolithic architectures where all components are tightly coupled.
+
+<img src="images/microservices.png" width="700">
+
+### How do you secure a Node.js application?
+
+Answer: Common security vulnerabilities in Node.js applications include:
+
+- **Injection attacks:** SQL Injection, NoSQL Injection, Command Injection.
+
+- **Cross-Site Scripting (XSS):** Injecting malicious scripts into web pages.
+
+- **Cross-Site Request Forgery (CSRF):** Tricking users into performing unwanted actions.
+
+- **Broken Authentication:** Weak session management, insecure password storage.
+
+- **Insecure Dependencies:** Using outdated or vulnerable third-party packages.
+
+- **Denial of Service (DoS):** Exploiting vulnerabilities to make the service unavailable.
+
+- **Sensitive Data Exposure:** Leaking sensitive information through improper logging or error handling.
+
+- **Insecure Deserialization:** Exploiting flaws in deserialization processes.
+
+### What is the V8 JavaScript engine?
+
+Answer: V8 is Google's open-source high-performance JavaScript and WebAssembly engine, written in C++. It compiles JavaScript directly into native machine code before executing it, rather than using an interpreter. Node.js uses V8 to execute JavaScript code, providing fast execution speeds.
+
+### Explain Buffer class.
+
+Answer: The `Buffer` class in Node.js is a global object that provides a way to handle binary data directly. It represents a raw binary data buffer, similar to an array of integers, but corresponds to a raw memory allocation outside the V8 heap. Buffers are commonly used for operations involving network protocols, file I/O, and interacting with binary data streams.
+
+Example:
+
+```javascript
+const buf = Buffer.from('Hello Node.js!', 'utf8');
+console.log(buf); // Output: <Buffer 48 65 6c 6c 6f 20 4e 6f 64 65 2e 6a 73 21>
+console.log(buf.toString('hex')); // Output: 48656c6c6f204e6f64652e6a7321
+```
+
+### How do you optimize Node.js application performance?
+
+Answer: Optimizing Node.js performance involves several strategies:
+
+- **Asynchronous I/O:** Leverage Node.js's non-blocking nature for I/O operations.
+
+- **Clustering/Worker Threads:** Utilize multiple CPU cores for CPU-bound tasks.
+
+- **Caching:** Implement caching (in-memory, Redis) for frequently accessed data.
+
+- **Database Optimization:** Optimize queries, use indexing, connection pooling.
+
+- **Load Balancing:** Distribute traffic across multiple instances.
+
+- **Profiling:** Use tools like Node.js Inspector, `clinic.js` to identify bottlenecks.
+
+- **Efficient Algorithms:** Use optimized algorithms and data structures.
+
+- **Minimize Blocking Operations:** Avoid synchronous functions where possible.
+
+- **Gzip Compression:** Compress HTTP responses.
+
+- **Keep Dependencies Updated:** Newer versions often include performance improvements.
+
+### What are unhandled rejections and uncaught exceptions?
+
+Answer:
+
+- **Unhandled Rejections:** Occur when a Promise is rejected, and there is no `.catch()` handler (or `try...catch` in an `async` function) to handle that rejection. In Node.js, unhandled rejections can lead to process termination in newer versions if not explicitly handled.
+
+- **Uncaught Exceptions:** Occur when a synchronous error is thrown, and there is no `try...catch` block to catch it. If an uncaught exception reaches the event loop, it will typically crash the Node.js process.
+
+Node.js provides `process.on("unhandledRejection")` and `process.on("uncaughtException")` to catch these global errors.
+
+### How do you test asynchronous code?
+
+Answer: Testing asynchronous code requires special handling to ensure that tests wait for asynchronous operations to complete before asserting results. Common approaches include:
+
+- **Callbacks:** Passing a `done` callback to the test function and calling it when the async operation finishes.
+
+- **Promises:** Returning a Promise from the test function; Jest will wait for the Promise to resolve or reject.
+
+- **`async/await`********:** Using `async` test functions and `await`ing Promises within them.
+
+- **Timers:** Using `jest.useFakeTimers()` to control `setTimeout` and `setInterval`.
+
+Example (`async/await` test):
+
+```javascript
+describe("fetchData", () => {
+  it("should fetch data successfully", async () => {
+    const data = await fetchDataFromAPI(); // Assume fetchDataFromAPI returns a Promise
+    expect(data).toEqual({ message: "success" });
+  });
+});
+```
 
 ---
 
@@ -246,8 +421,7 @@ Answer: Node.js is an open-source, cross-platform JavaScript runtime environment
 
 ### Q: Explain the Node.js Event Loop.
 
-Answer: The Node.js Event Loop is a core component that handles asynchronous operations. It continuously checks for tasks in the call stack and moves them to the event queue. Once the call stack is empty, it processes tasks from the event queue. This non-blocking I/O model allows Node.js to handle many concurrent connections efficiently without creating a new thread for each.
-<img src="./images/event_loop.png" width="700" height="1000">
+Answer: The Node.js Event Loop is a core component that handles asynchronous operations. It continuously checks for tasks in the call stack and moves them to the event queue. Once the call stack is empty, it processes tasks from the event queue. This non-blocking I/O model allows Node.js to handle many concurrent connections efficiently without creating a new thread for each.<img src="./images/event_loop.png" width="700" height="1000">
 
 ### Q: What is the purpose of `package.json`?
 
@@ -358,16 +532,16 @@ Answer: You can create an HTTP server in Node.js using the built-in `http` modul
 Example:
 
 ```javascript
-const http = require('http' );
+const http = require('http'  );
 
-const server = http.createServer((req, res ) => {
+const server = http.createServer((req, res  ) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   res.end('Hello, World!\n');
 });
 
 server.listen(3000, '127.0.0.1', () => {
-  console.log('Server running at http://127.0.0.1:3000/' );
+  console.log('Server running at http://127.0.0.1:3000/'  );
 });
 ```
 
@@ -771,7 +945,7 @@ Example:
 ```javascript
 async function fetchData() {
   try {
-    const response = await fetch("https://api.example.com/data" );
+    const response = await fetch("https://api.example.com/data"  );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -1219,7 +1393,7 @@ try {
 
 Answer: Node.js applications can be debugged using:
 
-- **`console.log()`****:** Simple but effective for inspecting variable values.
+- **`console.log()`********:** Simple but effective for inspecting variable values.
 
 - **Node.js Inspector:** Built-in debugger accessible via `node --inspect <file.js>`. It exposes a V8 Inspector Protocol endpoint, allowing debugging with Chrome DevTools or IDEs like VS Code.
 
@@ -1270,7 +1444,7 @@ Answer: Common error handling patterns in Express.js include:
 
 - **Async/Await with ****`try...catch`****:** For route handlers and middleware that use `async/await`, wrap the logic in `try...catch` blocks.
 
-- **`express-async-errors`**** or ****`express-promise-router`****:** Libraries that automatically catch errors from async route handlers without needing explicit `try...catch` in each handler.
+- **`express-async-errors`**** or **`express-promise-router`**:** Libraries that automatically catch errors from async route handlers without needing explicit `try...catch` in each handler.
 
 - **Custom Error Classes:** Creating specific error types for different scenarios.
 
@@ -1441,7 +1615,7 @@ Answer: Testing asynchronous code requires special handling to ensure that tests
 
 - **Promises:** Returning a Promise from the test function; Jest will wait for the Promise to resolve or reject.
 
-- **`async/await`****:** Using `async` test functions and `await`ing Promises within them.
+- **`async/await`********:** Using `async` test functions and `await`ing Promises within them.
 
 - **Timers:** Using `jest.useFakeTimers()` to control `setTimeout` and `setInterval`.
 
@@ -1496,7 +1670,7 @@ Example:
 
 ```javascript
 const cluster = require("cluster");
-const http = require("http" );
+const http = require("http"  );
 const numCPUs = require("os").cpus().length;
 
 if (cluster.isMaster) {
@@ -1511,7 +1685,7 @@ if (cluster.isMaster) {
     cluster.fork(); // Replace the dead worker
   });
 } else {
-  http.createServer((req, res ) => {
+  http.createServer((req, res  ) => {
     res.writeHead(200);
     res.end("hello world\n");
   }).listen(8000);
@@ -1739,7 +1913,7 @@ Answer: Handling HTTPS in Node.js involves creating an HTTPS server using the bu
 Example (basic HTTPS server):
 
 ```javascript
-const https = require("https" );
+const https = require("https"  );
 const fs = require("fs");
 
 const options = {
@@ -1747,7 +1921,7 @@ const options = {
   cert: fs.readFileSync("path/to/your/certificate.crt"),
 };
 
-https.createServer(options, (req, res ) => {
+https.createServer(options, (req, res  ) => {
   res.writeHead(200);
   res.end("Hello HTTPS World!");
 }).listen(8443, () => {
@@ -2040,9 +2214,9 @@ Answer: A simple HTTP server can be implemented using Node.js's built-in `http` 
 Example:
 
 ```javascript
-const http = require("http" );
+const http = require("http"  );
 
-const server = http.createServer((req, res ) => {
+const server = http.createServer((req, res  ) => {
   res.writeHead(200, { "Content-Type": "text/plain" });
   res.end("Hello, World!\n");
 });
@@ -2173,7 +2347,7 @@ app.delete("/items/:id", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}` );
+  console.log(`Server running on http://localhost:${PORT}`  );
 });
 ```
 
@@ -2255,7 +2429,7 @@ app.get("/profile", authenticateToken, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}` );
+  console.log(`Server running on http://localhost:${PORT}`  );
 });
 ```
 
@@ -2706,7 +2880,7 @@ This guide is designed for quick revision. Here are some tips:
 
 ## References
 
-[1]: https://nodejs.org/en/docs/ "Node.js Official Documentation. (n.d.). Node.js. Retrieved from"
+[1]: https://nodejs.org/en/docs/ "Node.js Official Documentation. (n.d. ). Node.js. Retrieved from"
 
 [2]: https://expressjs.com/ "Express.js Official Website. (n.d. ). Express - Node.js web application framework. Retrieved from"
 
@@ -2958,7 +3132,7 @@ This guide is designed for quick revision. Here are some tips:
 
 [126]: # "V8 JavaScript Engine Wikipedia. (n.d. ). V8 (JavaScript engine). Retrieved from https://en.wikipedia.org/wiki/V8(JavaScriptengine )"
 
-[127]: http://www.commonjs.org/ "CommonJS CommonJS. (n.d.). CommonJS. Retrieved from"
+[127]: http://www.commonjs.org/ "CommonJS CommonJS. (n.d. ). CommonJS. Retrieved from"
 
 [128]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules "ES Modules MDN Web Docs. (n.d. ). JavaScript modules. Retrieved from"
 
@@ -3006,7 +3180,7 @@ This guide is designed for quick revision. Here are some tips:
 
 [150]: # "LRU Cache Wikipedia. (n.d. ). Cache replacement policies. Retrieved from https://en.wikipedia.org/wiki/Cachereplacementpolicies#Leastrecentlyused_(LRU )"
 
-[151]: https://en.wikipedia.org/wiki/Content_delivery_network "CDN Wikipedia. (n.d.). Content delivery network. Retrieved from"
+[151]: https://en.wikipedia.org/wiki/Content_delivery_network "CDN Wikipedia. (n.d. ). Content delivery network. Retrieved from"
 
 [152]: https://en.wikipedia.org/wiki/Application_performance_management "APM Wikipedia. (n.d. ). Application performance management. Retrieved from"
 
@@ -3064,7 +3238,7 @@ This guide is designed for quick revision. Here are some tips:
 
 [179]: # "Concurrency vs Parallelism Wikipedia. (n.d. ). Concurrency (computer science). Retrieved from https://en.wikipedia.org/wiki/Concurrency(computerscience )"
 
-[180]: https://en.wikipedia.org/wiki/Callback_hell "Callback Hell Wikipedia. (n.d.). Callback hell. Retrieved from"
+[180]: https://en.wikipedia.org/wiki/Callback_hell "Callback Hell Wikipedia. (n.d. ). Callback hell. Retrieved from"
 
 [181]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise "Promises MDN Web Docs. (n.d. ). Promise. Retrieved from"
 
@@ -3088,7 +3262,7 @@ This guide is designed for quick revision. Here are some tips:
 
 [191]: https://github.com/pinojs/pino "Pino GitHub Repository. (n.d. ). pinojs/pino. Retrieved from"
 
-[192]: https://nodejs.org/docs/latest/api/process.html#signal-events "process.on("SIGTERM" ) Node.js Documentation. (n.d.). Node.js v20.x Documentation. Retrieved from"
+[192]: [https://nodejs.org/docs/latest/api/process.html#signal-events](https://nodejs.org/docs/latest/api/process.html#signal-events) "process.on("SIGTERM" ) Node.js Documentation. (n.d.). Node.js v20.x Documentation. Retrieved from"
 
 [193]: https://github.com/Abazhenov/express-async-errors "express-async-errors GitHub Repository. (n.d. ). Abazhenov/express-async-errors. Retrieved from"
 
@@ -3312,592 +3486,3 @@ This guide is designed for quick revision. Here are some tips:
 
 ---
 
-## References
-
-[1]: https://nodejs.org/en/docs/ "Node.js Official Documentation. (n.d.). Node.js. Retrieved from"
-
-[2]: https://expressjs.com/ "Express.js Official Website. (n.d. ). Express - Node.js web application framework. Retrieved from"
-
-[3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Asynchronous_JavaScript "MDN Web Docs. (n.d. ). JavaScript asynchronous programming. Retrieved from"
-
-[4]: https://mongoosejs.com/docs/ "Mongoose Official Documentation. (n.d. ). Mongoose ODM. Retrieved from"
-
-[5]: https://sequelize.org/docs/v6/ "Sequelize Official Documentation. (n.d. ). Sequelize. Retrieved from"
-
-[6]: https://jwt.io/ "JSON Web Tokens Official Website. (n.d. ). JWT.IO. Retrieved from"
-
-[7]: https://owasp.org/www-project-top-ten/ "OWASP Foundation. (n.d. ). OWASP Top Ten Web Application Security Risks. Retrieved from"
-
-[8]: https://docs.docker.com/ "Docker Official Documentation. (n.d. ). Docker. Retrieved from"
-
-[9]: https://kubernetes.io/docs/home/ "Kubernetes Official Documentation. (n.d. ). Kubernetes. Retrieved from"
-
-[10]: https://pm2.keymetrics.io/ "PM2 Official Documentation. (n.d. ). PM2 - Production Process Manager for Node.js apps. Retrieved from"
-
-[11]: https://aws.amazon.com/lambda/ "AWS Lambda Documentation. (n.d. ). AWS Lambda. Retrieved from"
-
-[12]: https://www.nginx.com/ "Nginx Official Website. (n.d. ). Nginx. Retrieved from"
-
-[13]: https://jestjs.io/ "Jest Official Documentation. (n.d. ). Jest. Retrieved from"
-
-[14]: https://github.com/visionmedia/supertest "Supertest GitHub Repository. (n.d. ). visionmedia/supertest. Retrieved from"
-
-[15]: https://github.com/theturtle32/WebSocket-Node "WebSocket-Node GitHub Repository. (n.d. ). theturtle32/WebSocket-Node. Retrieved from"
-
-[16]: https://github.com/websockets/ws "ws GitHub Repository. (n.d. ). websockets/ws. Retrieved from"
-
-[17]: https://socket.io/ "socket.io Official Website. (n.d. ). Socket.IO. Retrieved from"
-
-[18]: https://grpc.io/ "gRPC Official Website. (n.d. ). gRPC. Retrieved from"
-
-[19]: https://martinfowler.com/articles/microservices.html "Martin Fowler. (2014 ). Microservices. Retrieved from"
-
-[20]: https://martinfowler.com/bliki/CQRS.html "Martin Fowler. (2017 ). CQRS. Retrieved from"
-
-[21]: https://martinfowler.com/eaaDev/EventSourcing.html "Martin Fowler. (2017 ). Event Sourcing. Retrieved from"
-
-[22]: https://graphql.org/ "GraphQL Official Website. (n.d. ). GraphQL. Retrieved from"
-
-[23]: https://www.passportjs.org/ "Passport.js Official Website. (n.d. ). Passport.js. Retrieved from"
-
-[24]: https://github.com/kelektiv/node.bcrypt.js "bcrypt GitHub Repository. (n.d. ). kelektiv/node.bcrypt.js. Retrieved from"
-
-[25]: https://github.com/expressjs/multer "multer GitHub Repository. (n.d. ). expressjs/multer. Retrieved from"
-
-[26]: https://github.com/helmetjs/helmet "helmet GitHub Repository. (n.d. ). helmetjs/helmet. Retrieved from"
-
-[27]: https://github.com/nfriedly/express-rate-limit "express-rate-limit GitHub Repository. (n.d. ). nfriedly/express-rate-limit. Retrieved from"
-
-[28]: https://github.com/auth0/node-jsonwebtoken "jsonwebtoken GitHub Repository. (n.d. ). auth0/node-jsonwebtoken. Retrieved from"
-
-[29]: https://github.com/luin/ioredis "ioredis GitHub Repository. (n.d. ). luin/ioredis. Retrieved from"
-
-[30]: https://github.com/redis/node-redis "node-redis GitHub Repository. (n.d. ). redis/node-redis. Retrieved from"
-
-[31]: https://github.com/brianc/node-postgres "pg GitHub Repository. (n.d. ). brianc/node-postgres. Retrieved from"
-
-[32]: https://github.com/sidorares/node-mysql2 "mysql2 GitHub Repository. (n.d. ). sidorares/node-mysql2. Retrieved from"
-
-[33]: https://github.com/tj/commander.js "commander.js GitHub Repository. (n.d. ). tj/commander.js. Retrieved from"
-
-[34]: https://github.com/yargs/yargs "yargs GitHub Repository. (n.d. ). yargs/yargs. Retrieved from"
-
-[35]: https://nodejs.org/docs/latest/api/util.html#utilpromisifyoriginal "util.promisify Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[36]: https://nodejs.org/docs/latest/api/process.html#processnexttickcallback-args "process.nextTick( ) Node.js Documentation. (n.d.). Node.js v20.x Documentation. Retrieved from"
-
-[37]: https://nodejs.org/docs/latest/api/timers.html#setimmediatecallback-args "setImmediate( ) Node.js Documentation. (n.d.). Node.js v20.x Documentation. Retrieved from"
-
-[38]: https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask "queueMicrotask( ) MDN Web Docs. (n.d.). queueMicrotask(). Retrieved from"
-
-[39]: https://github.com/libuv/libuv "libuv GitHub Repository. (n.d. ). libuv/libuv. Retrieved from"
-
-[40]: https://nodejs.org/docs/latest/api/process.html#processargv "process.argv Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[41]: https://nodejs.org/docs/latest/api/buffer.html "Buffer Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[42]: https://nodejs.org/docs/latest/api/child_process.html "child_process Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[43]: https://nodejs.org/docs/latest/api/crypto.html "crypto Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[44]: https://nodejs.org/docs/latest/api/fs.html "fs Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[45]: https://nodejs.org/docs/latest/api/http.html "http Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[46]: https://nodejs.org/docs/latest/api/events.html "events Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[47]: https://nodejs.org/docs/latest/api/path.html "path Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[48]: https://nodejs.org/docs/latest/api/util.html "util Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[49]: https://nodejs.org/docs/latest/api/os.html "os Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[50]: https://nodejs.org/docs/latest/api/cluster.html "cluster Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[51]: https://nodejs.org/docs/latest/api/worker_threads.html "worker_threads Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[52]: https://nodejs.org/docs/latest/api/process.html#processmemoryusage "process.memoryUsage( ) Node.js Documentation. (n.d.). Node.js v20.x Documentation. Retrieved from"
-
-[53]: https://nodejs.org/docs/latest/api/process.html#processcpuusage "process.cpuUsage( ) Node.js Documentation. (n.d.). Node.js v20.x Documentation. Retrieved from"
-
-[54]: https://nodejs.org/docs/latest/api/perf_hooks.html "perf_hooks Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[55]: https://github.com/clinicjs/node-clinic "clinic.js GitHub Repository. (n.d. ). clinicjs/node-clinic. Retrieved from"
-
-[56]: https://github.com/node-cache/node-cache "node-cache GitHub Repository. (n.d. ). node-cache/node-cache. Retrieved from"
-
-[57]: https://github.com/winstonjs/winston "winston GitHub Repository. (n.d. ). winstonjs/winston. Retrieved from"
-
-[58]: https://github.com/pinojs/pino "pino GitHub Repository. (n.d. ). pinojs/pino. Retrieved from"
-
-[59]: https://github.com/expressjs/session "express-session GitHub Repository. (n.d. ). expressjs/session. Retrieved from"
-
-[60]: https://github.com/jaredhanson/passport "passport GitHub Repository. (n.d. ). jaredhanson/passport. Retrieved from"
-
-[61]: https://github.com/kelektiv/node.bcrypt.js "bcrypt GitHub Repository. (n.d. ). kelektiv/node.bcrypt.js. Retrieved from"
-
-[62]: https://eslint.org/ "eslint Official Website. (n.d. ). ESLint - Pluggable JavaScript linter. Retrieved from"
-
-[63]: https://prettier.io/ "prettier Official Website. (n.d. ). Prettier - Opinionated Code Formatter. Retrieved from"
-
-[64]: https://www.cypress.io/ "cypress Official Website. (n.d. ). Cypress.io. Retrieved from"
-
-[65]: https://playwright.dev/ "playwright Official Website. (n.d. ). Playwright. Retrieved from"
-
-[66]: https://www.selenium.dev/ "selenium Official Website. (n.d. ). Selenium. Retrieved from"
-
-[67]: https://github.com/gotwarlost/istanbul "istanbul GitHub Repository. (n.d. ). gotwarlost/istanbul. Retrieved from"
-
-[68]: https://mochajs.org/ "mocha Official Website. (n.d. ). Mocha - the fun, simple, flexible JavaScript test framework. Retrieved from"
-
-[69]: https://www.chaijs.com/ "chai Official Website. (n.d. ). Chai - BDD / TDD assertion library for node & the browser. Retrieved from"
-
-[70]: https://github.com/visionmedia/supertest "supertest GitHub Repository. (n.d. ). visionmedia/supertest. Retrieved from"
-
-[71]: https://github.com/Abazhenov/express-async-errors "express-async-errors GitHub Repository. (n.d. ). Abazhenov/express-async-errors. Retrieved from"
-
-[72]: https://github.com/express-promise-router/express-promise-router "express-promise-router GitHub Repository. (n.d. ). express-promise-router/express-promise-router. Retrieved from"
-
-[73]: https://github.com/nodejs/llnode "llnode GitHub Repository. (n.d. ). nodejs/llnode. Retrieved from"
-
-[74]: https://sentry.io/ "Sentry Official Website. (n.d. ). Sentry - Error Tracking & Performance Monitoring. Retrieved from"
-
-[75]: https://www.bugsnag.com/ "Bugsnag Official Website. (n.d. ). Bugsnag - Error Monitoring & Crash Reporting. Retrieved from"
-
-[76]: https://prometheus.io/ "Prometheus Official Website. (n.d. ). Prometheus. Retrieved from"
-
-[77]: https://grafana.com/ "Grafana Official Website. (n.d. ). Grafana. Retrieved from"
-
-[78]: https://jmeter.apache.org/ "JMeter Official Website. (n.d. ). Apache JMeter. Retrieved from"
-
-[79]: https://k6.io/ "k6 Official Website. (n.d. ). k6 - Load testing for engineers. Retrieved from"
-
-[80]: https://artillery.io/ "Artillery Official Website. (n.d. ). Artillery - Load testing for APIs & services. Retrieved from"
-
-[81]: https://www.rabbitmq.com/ "RabbitMQ Official Website. (n.d. ). RabbitMQ. Retrieved from"
-
-[82]: https://kafka.apache.org/ "Apache Kafka Official Website. (n.d. ). Apache Kafka. Retrieved from"
-
-[83]: https://aws.amazon.com/sqs/ "AWS SQS Official Website. (n.d. ). Amazon SQS. Retrieved from"
-
-[84]: https://istio.io/ "Istio Official Website. (n.d. ). Istio. Retrieved from"
-
-[85]: https://linkerd.io/ "Linkerd Official Website. (n.d. ). Linkerd. Retrieved from"
-
-[86]: https://www.hashicorp.com/products/consul "Consul Connect Official Website. (n.d. ). Consul by HashiCorp. Retrieved from"
-
-[87]: https://aws.amazon.com/secrets-manager/ "AWS Secrets Manager Official Website. (n.d. ). AWS Secrets Manager. Retrieved from"
-
-[88]: https://cloud.google.com/secret-manager "Google Secret Manager Official Website. (n.d. ). Google Cloud Secret Manager. Retrieved from"
-
-[89]: https://devcenter.heroku.com/articles/config-vars "Heroku Config Vars Official Website. (n.d. ). Heroku Dev Center. Retrieved from"
-
-[90]: https://kubernetes.io/docs/concepts/configuration/secret/ "Kubernetes Secrets Official Website. (n.d. ). Kubernetes Concepts. Retrieved from"
-
-[91]: https://snyk.io/ "Snyk Official Website. (n.d. ). Snyk - Developer Security. Retrieved from"
-
-[92]: https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check Official Website. (n.d. ). OWASP Dependency-Check. Retrieved from"
-
-[93]: https://github.com/helmetjs/helmet "helmet GitHub Repository. (n.d. ). helmetjs/helmet. Retrieved from"
-
-[94]: https://github.com/nfriedly/express-rate-limit "express-rate-limit GitHub Repository. (n.d. ). nfriedly/express-rate-limit. Retrieved from"
-
-[95]: https://nodejs.org/docs/latest/api/https.html "https Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[96]: https://www.docker.com/ "Docker Official Website. (n.d. ). Docker. Retrieved from"
-
-[97]: https://aws.amazon.com/ec2/ "AWS EC2 Official Website. (n.d. ). Amazon EC2. Retrieved from"
-
-[98]: https://aws.amazon.com/ecs/ "AWS ECS Official Website. (n.d. ). Amazon ECS. Retrieved from"
-
-[99]: https://cloud.google.com/compute "Google Compute Engine Official Website. (n.d. ). Google Compute Engine. Retrieved from"
-
-[100]: https://cloud.google.com/appengine "Google App Engine Official Website. (n.d. ). Google App Engine. Retrieved from"
-
-[101]: https://cloud.google.com/run "Google Cloud Run Official Website. (n.d. ). Google Cloud Run. Retrieved from"
-
-[102]: https://azure.microsoft.com/en-us/services/app-service/ "Azure App Service Official Website. (n.d. ). Azure App Service. Retrieved from"
-
-[103]: https://www.heroku.com/ "Heroku Official Website. (n.d. ). Heroku. Retrieved from"
-
-[104]: https://www.nginx.com/ "Nginx Official Website. (n.d. ). Nginx. Retrieved from"
-
-[105]: https://httpd.apache.org/ "Apache HTTP Server Official Website. (n.d. ). Apache HTTP Server Project. Retrieved from"
-
-[106]: https://git-scm.com/ "Git Official Website. (n.d. ). Git. Retrieved from"
-
-[107]: https://github.com/features/actions "GitHub Actions Official Website. (n.d. ). GitHub Actions. Retrieved from"
-
-[108]: https://docs.gitlab.com/ee/ci/ "GitLab CI/CD Official Website. (n.d. ). GitLab CI/CD. Retrieved from"
-
-[109]: https://www.jenkins.io/ "Jenkins Official Website. (n.d. ). Jenkins. Retrieved from"
-
-[110]: https://expressjs.com/ "Express.js Official Website. (n.d. ). Express - Node.js web application framework. Retrieved from"
-
-[111]: https://koajs.com/ "Koa.js Official Website. (n.d. ). Koa. Retrieved from"
-
-[112]: https://nestjs.com/ "NestJS Official Website. (n.d. ). NestJS - A progressive Node.js framework. Retrieved from"
-
-[113]: https://hapi.dev/ "Hapi.js Official Website. (n.d. ). Hapi.js. Retrieved from"
-
-[114]: https://www.fastify.io/ "Fastify Official Website. (n.d. ). Fastify. Retrieved from"
-
-[115]: https://en.wikipedia.org/wiki/HTTP/2 "HTTP/2 Wikipedia. (n.d. ). HTTP/2. Retrieved from"
-
-[116]: https://developers.google.com/protocol-buffers "Protocol Buffers Official Website. (n.d. ). Protocol Buffers. Retrieved from"
-
-[117]: https://en.wikipedia.org/wiki/STAR_method "STAR Method Wikipedia. (n.d. ). STAR method. Retrieved from"
-
-[118]: https://eslint.org/ "ESLint Official Website. (n.d. ). ESLint - Pluggable JavaScript linter. Retrieved from"
-
-[119]: https://prettier.io/ "Prettier Official Website. (n.d. ). Prettier - Opinionated Code Formatter. Retrieved from"
-
-[120]: https://www.typescriptlang.org/ "TypeScript Official Website. (n.d. ). TypeScript. Retrieved from"
-
-[121]: https://react.dev/ "React Official Website. (n.d. ). React – A JavaScript library for building user interfaces. Retrieved from"
-
-[122]: https://vuejs.org/ "Vue.js Official Website. (n.d. ). Vue.js. Retrieved from"
-
-[123]: https://angular.io/ "Angular Official Website. (n.d. ). Angular. Retrieved from"
-
-[124]: https://nodejs.org/en/ "Node.js Official Website. (n.d. ). Node.js. Retrieved from"
-
-[125]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules "JavaScript MDN Web Docs. (n.d. ). JavaScript. Retrieved from"
-
-[126]: # "V8 JavaScript Engine Wikipedia. (n.d. ). V8 (JavaScript engine). Retrieved from https://en.wikipedia.org/wiki/V8(JavaScriptengine )"
-
-[127]: http://www.commonjs.org/ "CommonJS CommonJS. (n.d.). CommonJS. Retrieved from"
-
-[128]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules "ES Modules MDN Web Docs. (n.d. ). JavaScript modules. Retrieved from"
-
-[129]: https://www.npmjs.com/ "npm Official Website. (n.d. ). npm. Retrieved from"
-
-[130]: https://promisesaplus.com/ "Promise A+ Promises/A+. (n.d. ). Promises/A+. Retrieved from"
-
-[131]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#async_iteration "async iterators MDN Web Docs. (n.d. ). Async iteration. Retrieved from"
-
-[132]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function* "async generators MDN Web Docs. (n.d. ). async function*. Retrieved from"
-
-[133]: https://en.wikipedia.org/wiki/SQL "SQL Wikipedia. (n.d. ). SQL. Retrieved from"
-
-[134]: https://en.wikipedia.org/wiki/NoSQL "NoSQL Wikipedia. (n.d. ). NoSQL. Retrieved from"
-
-[135]: https://www.mongodb.com/ "MongoDB Official Website. (n.d. ). MongoDB. Retrieved from"
-
-[136]: https://www.postgresql.org/ "PostgreSQL Official Website. (n.d. ). PostgreSQL. Retrieved from"
-
-[137]: https://www.mysql.com/ "MySQL Official Website. (n.d. ). MySQL. Retrieved from"
-
-[138]: https://mariadb.org/ "MariaDB Official Website. (n.d. ). MariaDB. Retrieved from"
-
-[139]: https://www.sqlite.org/index.html "SQLite Official Website. (n.d. ). SQLite. Retrieved from"
-
-[140]: https://www.microsoft.com/en-us/sql-server "Microsoft SQL Server Official Website. (n.d. ). SQL Server. Retrieved from"
-
-[141]: https://redis.io/ "Redis Official Website. (n.d. ). Redis. Retrieved from"
-
-[142]: https://oauth.net/2/ "OAuth 2.0 OAuth. (n.d. ). OAuth 2.0. Retrieved from"
-
-[143]: https://openid.net/connect/ "OpenID Connect OpenID Foundation. (n.d. ). OpenID Connect. Retrieved from"
-
-[144]: https://owasp.org/www-community/controls/HttpOnly "HTTP-only cookies OWASP Foundation. (n.d. ). HttpOnly. Retrieved from"
-
-[145]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite "SameSite cookies MDN Web Docs. (n.d. ). SameSite cookie attribute. Retrieved from"
-
-[146]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP "Content Security Policy MDN Web Docs. (n.d. ). Content Security Policy (CSP). Retrieved from"
-
-[147]: https://en.wikipedia.org/wiki/HTTPS "HTTPS Wikipedia. (n.d. ). HTTPS. Retrieved from"
-
-[148]: https://en.wikipedia.org/wiki/Transport_Layer_Security "SSL/TLS Wikipedia. (n.d. ). Transport Layer Security. Retrieved from"
-
-[149]: https://en.wikipedia.org/wiki/Gzip "Gzip Wikipedia. (n.d. ). Gzip. Retrieved from"
-
-[150]: # "LRU Cache Wikipedia. (n.d. ). Cache replacement policies. Retrieved from https://en.wikipedia.org/wiki/Cachereplacementpolicies#Leastrecentlyused_(LRU )"
-
-[151]: https://en.wikipedia.org/wiki/Content_delivery_network "CDN Wikipedia. (n.d.). Content delivery network. Retrieved from"
-
-[152]: https://en.wikipedia.org/wiki/Application_performance_management "APM Wikipedia. (n.d. ). Application performance management. Retrieved from"
-
-[153]: https://www.elastic.co/elastic-stack "ELK Stack Elastic. (n.d. ). Elastic Stack. Retrieved from"
-
-[154]: https://www.splunk.com/ "Splunk Official Website. (n.d. ). Splunk. Retrieved from"
-
-[155]: https://martinfowler.com/articles/microservices.html "Microservices Martin Fowler. (2014 ). Microservices. Retrieved from"
-
-[156]: https://microservices.io/patterns/data/saga.html "Saga Pattern Microservices.io. (n.d. ). Saga. Retrieved from"
-
-[157]: https://en.wikipedia.org/wiki/Eventual_consistency "Eventual Consistency Wikipedia. (n.d. ). Eventual consistency. Retrieved from"
-
-[158]: https://en.wikipedia.org/wiki/Idempotence "Idempotence Wikipedia. (n.d. ). Idempotence. Retrieved from"
-
-[159]: https://martinfowler.com/bliki/CQRS.html "CQRS Martin Fowler. (2017 ). CQRS. Retrieved from"
-
-[160]: https://martinfowler.com/eaaDev/EventSourcing.html "Event Sourcing Martin Fowler. (2017 ). Event Sourcing. Retrieved from"
-
-[161]: https://developer.mozilla.org/en-US/docs/Glossary/Server-side_rendering "Server-Side Rendering MDN Web Docs. (n.d. ). Server-side rendering (SSR). Retrieved from"
-
-[162]: https://martinfowler.com/bliki/CircuitBreaker.html "Circuit Breaker Martin Fowler. (2014 ). Circuit Breaker. Retrieved from"
-
-[163]: https://microservices.io/patterns/bulkhead.html "Bulkhead Pattern Microservices.io. (n.d. ). Bulkhead. Retrieved from"
-
-[164]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-update-deployment "Rolling Update Kubernetes. (n.d. ). Rolling Update. Retrieved from"
-
-[165]: https://en.wikipedia.org/wiki/Canary_release "Canary Release Wikipedia. (n.d. ). Canary release. Retrieved from"
-
-[166]: https://martinfowler.com/bliki/BlueGreenDeployment.html "Blue/Green Deployment Martin Fowler. (2010 ). BlueGreenDeployment. Retrieved from"
-
-[167]: https://nodejs.org/docs/latest/api/process.html#signal-events "Graceful Shutdown Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[168]: https://en.wikipedia.org/wiki/Memory_leak "Memory Leak Wikipedia. (n.d. ). Memory leak. Retrieved from"
-
-[169]: https://developer.chrome.com/docs/devtools/memory-problems/heap-snapshots/ "Heap Snapshot Chrome DevTools. (n.d. ). Record heap snapshots. Retrieved from"
-
-[170]: https://en.wikipedia.org/wiki/Post-mortem_debugging "Post-mortem Debugging Wikipedia. (n.d. ). Post-mortem debugging. Retrieved from"
-
-[171]: https://en.wikipedia.org/wiki/Unit_testing "Unit Testing Wikipedia. (n.d. ). Unit testing. Retrieved from"
-
-[172]: https://en.wikipedia.org/wiki/Integration_testing "Integration Testing Wikipedia. (n.d. ). Integration testing. Retrieved from"
-
-[173]: https://en.wikipedia.org/wiki/End-to-end_testing "End-to-End Testing Wikipedia. (n.d. ). End-to-end testing. Retrieved from"
-
-[174]: https://en.wikipedia.org/wiki/Test-driven_development "TDD Wikipedia. (n.d. ). Test-driven development. Retrieved from"
-
-[175]: https://en.wikipedia.org/wiki/CI/CD "CI/CD Wikipedia. (n.d. ). CI/CD. Retrieved from"
-
-[176]: https://en.wikipedia.org/wiki/Code_coverage "Code Coverage Wikipedia. (n.d. ). Code coverage. Retrieved from"
-
-[177]: https://martinfowler.com/bliki/TestDouble.html "Mocks, Stubs, Spies Martin Fowler. (2007 ). TestDouble. Retrieved from"
-
-[178]: https://nodejs.org/docs/latest/api/event_loop_timers_and_nexttick.html "Event Loop Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[179]: # "Concurrency vs Parallelism Wikipedia. (n.d. ). Concurrency (computer science). Retrieved from https://en.wikipedia.org/wiki/Concurrency(computerscience )"
-
-[180]: https://en.wikipedia.org/wiki/Callback_hell "Callback Hell Wikipedia. (n.d.). Callback hell. Retrieved from"
-
-[181]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise "Promises MDN Web Docs. (n.d. ). Promise. Retrieved from"
-
-[182]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function "async/await MDN Web Docs. (n.d. ). async function. Retrieved from"
-
-[183]: https://nodejs.org/docs/latest/api/errors.html "Error Handling Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[184]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch "try...catch MDN Web Docs. (n.d. ). try...catch. Retrieved from"
-
-[185]: https://nodejs.org/docs/latest/api/process.html#event-unhandledrejection "unhandledRejection Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[186]: https://nodejs.org/docs/latest/api/process.html#event-uncaughtexception "uncaughtException Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[187]: https://nodejs.org/docs/latest/api/domain.html "domain Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[188]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error "Error MDN Web Docs. (n.d. ). Error. Retrieved from"
-
-[189]: https://nodejs.org/docs/latest/api/inspector.html "Node.js Inspector Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[190]: https://github.com/winstonjs/winston "Winston GitHub Repository. (n.d. ). winstonjs/winston. Retrieved from"
-
-[191]: https://github.com/pinojs/pino "Pino GitHub Repository. (n.d. ). pinojs/pino. Retrieved from"
-
-[192]: https://nodejs.org/docs/latest/api/process.html#signal-events "process.on("SIGTERM" ) Node.js Documentation. (n.d.). Node.js v20.x Documentation. Retrieved from"
-
-[193]: https://github.com/Abazhenov/express-async-errors "express-async-errors GitHub Repository. (n.d. ). Abazhenov/express-async-errors. Retrieved from"
-
-[194]: https://github.com/express-promise-router/express-promise-router "express-promise-router GitHub Repository. (n.d. ). express-promise-router/express-promise-router. Retrieved from"
-
-[195]: https://nodejs.org/docs/latest/api/process.html#processmemoryusage "process.memoryUsage( ) Node.js Documentation. (n.d.). Node.js v20.x Documentation. Retrieved from"
-
-[196]: https://developer.chrome.com/docs/devtools/ "Chrome DevTools Official Website. (n.d. ). Chrome DevTools. Retrieved from"
-
-[197]: https://github.com/nodejs/llnode "llnode GitHub Repository. (n.d. ). nodejs/llnode. Retrieved from"
-
-[198]: https://jestjs.io/ "Jest Official Website. (n.d. ). Jest. Retrieved from"
-
-[199]: https://mochajs.org/ "Mocha Official Website. (n.d. ). Mocha - the fun, simple, flexible JavaScript test framework. Retrieved from"
-
-[200]: https://www.chaijs.com/ "Chai Official Website. (n.d. ). Chai - BDD / TDD assertion library for node & the browser. Retrieved from"
-
-[201]: https://github.com/visionmedia/supertest "Supertest GitHub Repository. (n.d. ). visionmedia/supertest. Retrieved from"
-
-[202]: https://docs.npmjs.com/cli/v8/commands/npm-audit "npm audit npm Docs. (n.d. ). npm audit. Retrieved from"
-
-[203]: https://snyk.io/ "Snyk Official Website. (n.d. ). Snyk - Developer Security. Retrieved from"
-
-[204]: https://owasp.org/www-project-dependency-check/ "OWASP Dependency-Check Official Website. (n.d. ). OWASP Dependency-Check. Retrieved from"
-
-[205]: https://github.com/helmetjs/helmet "helmet GitHub Repository. (n.d. ). helmetjs/helmet. Retrieved from"
-
-[206]: https://github.com/nfriedly/express-rate-limit "express-rate-limit GitHub Repository. (n.d. ). nfriedly/express-rate-limit. Retrieved from"
-
-[207]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP "Content Security Policy MDN Web Docs. (n.d. ). Content Security Policy (CSP). Retrieved from"
-
-[208]: https://nodejs.org/docs/latest/api/https.html "https Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[209]: https://www.docker.com/ "Docker Official Website. (n.d. ). Docker. Retrieved from"
-
-[210]: https://docs.docker.com/engine/reference/builder/ "Dockerfile Docker Docs. (n.d. ). Dockerfile reference. Retrieved from"
-
-[211]: https://pm2.keymetrics.io/ "PM2 Official Website. (n.d. ). PM2 - Production Process Manager for Node.js apps. Retrieved from"
-
-[212]: https://aws.amazon.com/lambda/ "AWS Lambda Official Website. (n.d. ). AWS Lambda. Retrieved from"
-
-[213]: https://cloud.google.com/functions "Google Cloud Functions Official Website. (n.d. ). Google Cloud Functions. Retrieved from"
-
-[214]: https://azure.microsoft.com/en-us/services/functions/ "Azure Functions Official Website. (n.d. ). Azure Functions. Retrieved from"
-
-[215]: https://aws.amazon.com/secrets-manager/ "AWS Secrets Manager Official Website. (n.d. ). AWS Secrets Manager. Retrieved from"
-
-[216]: https://cloud.google.com/secret-manager "Google Secret Manager Official Website. (n.d. ). Google Cloud Secret Manager. Retrieved from"
-
-[217]: https://kubernetes.io/docs/concepts/configuration/secret/ "Kubernetes Secrets Official Website. (n.d. ). Kubernetes Concepts. Retrieved from"
-
-[218]: https://www.nginx.com/ "Nginx Official Website. (n.d. ). Nginx. Retrieved from"
-
-[219]: https://en.wikipedia.org/wiki/Application_performance_management "APM Wikipedia. (n.d. ). Application performance management. Retrieved from"
-
-[220]: https://prometheus.io/ "Prometheus Official Website. (n.d. ). Prometheus. Retrieved from"
-
-[221]: https://grafana.com/ "Grafana Official Website. (n.d. ). Grafana. Retrieved from"
-
-[222]: https://sentry.io/ "Sentry Official Website. (n.d. ). Sentry - Error Tracking & Performance Monitoring. Retrieved from"
-
-[223]: https://www.bugsnag.com/ "Bugsnag Official Website. (n.d. ). Bugsnag - Error Monitoring & Crash Reporting. Retrieved from"
-
-[224]: https://martinfowler.com/bliki/BlueGreenDeployment.html "Blue/Green Deployment Martin Fowler. (2010 ). BlueGreenDeployment. Retrieved from"
-
-[225]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-update-deployment "Rolling Update Kubernetes. (n.d. ). Rolling Update. Retrieved from"
-
-[226]: https://en.wikipedia.org/wiki/Canary_release "Canary Release Wikipedia. (n.d. ). Canary release. Retrieved from"
-
-[227]: https://kubernetes.io/docs/home/ "Kubernetes Official Website. (n.d. ). Kubernetes. Retrieved from"
-
-[228]: https://docs.docker.com/get-started/overview/#containers "Containers Docker Docs. (n.d. ). What is a container?. Retrieved from"
-
-[229]: https://martinfowler.com/articles/microservices.html "Microservices Martin Fowler. (2014 ). Microservices. Retrieved from"
-
-[230]: https://graphql.org/ "GraphQL Official Website. (n.d. ). GraphQL. Retrieved from"
-
-[231]: https://en.wikipedia.org/wiki/Representational_state_transfer "REST Wikipedia. (n.d. ). Representational state transfer. Retrieved from"
-
-[232]: https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API "WebSockets MDN Web Docs. (n.d. ). WebSockets. Retrieved from"
-
-[233]: https://github.com/websockets/ws "ws GitHub Repository. (n.d. ). websockets/ws. Retrieved from"
-
-[234]: https://socket.io/ "socket.io Official Website. (n.d. ). Socket.IO. Retrieved from"
-
-[235]: https://grpc.io/ "gRPC Official Website. (n.d. ). gRPC. Retrieved from"
-
-[236]: https://en.wikipedia.org/wiki/Event-driven_architecture "Event-Driven Architecture Wikipedia. (n.d. ). Event-driven architecture. Retrieved from"
-
-[237]: https://en.wikipedia.org/wiki/Software_design_pattern "Design Patterns Wikipedia. (n.d. ). Software design pattern. Retrieved from"
-
-[238]: https://en.wikipedia.org/wiki/Message_queue "Message Queue Wikipedia. (n.d. ). Message queue. Retrieved from"
-
-[239]: https://www.rabbitmq.com/ "RabbitMQ Official Website. (n.d. ). RabbitMQ. Retrieved from"
-
-[240]: https://kafka.apache.org/ "Apache Kafka Official Website. (n.d. ). Apache Kafka. Retrieved from"
-
-[241]: https://aws.amazon.com/sqs/ "AWS SQS Official Website. (n.d. ). Amazon SQS. Retrieved from"
-
-[242]: https://redis.io/docs/data-types/streams/ "Redis Streams Redis. (n.d. ). Redis Streams. Retrieved from"
-
-[243]: https://en.wikipedia.org/wiki/Service_mesh "Service Mesh Wikipedia. (n.d. ). Service mesh. Retrieved from"
-
-[244]: https://istio.io/ "Istio Official Website. (n.d. ). Istio. Retrieved from"
-
-[245]: https://linkerd.io/ "Linkerd Official Website. (n.d. ). Linkerd. Retrieved from"
-
-[246]: https://www.hashicorp.com/products/consul "Consul Connect Official Website. (n.d. ). Consul by HashiCorp. Retrieved from"
-
-[247]: https://en.wikipedia.org/wiki/Distributed_transaction "Distributed Transactions Wikipedia. (n.d. ). Distributed transaction. Retrieved from"
-
-[248]: https://microservices.io/patterns/data/saga.html "Saga Pattern Microservices.io. (n.d. ). Saga. Retrieved from"
-
-[249]: https://martinfowler.com/bliki/CQRS.html "CQRS Martin Fowler. (2017 ). CQRS. Retrieved from"
-
-[250]: https://martinfowler.com/eaaDev/EventSourcing.html "Event Sourcing Martin Fowler. (2017 ). Event Sourcing. Retrieved from"
-
-[251]: https://developer.mozilla.org/en-US/docs/Glossary/Server-side_rendering "Server-Side Rendering MDN Web Docs. (n.d. ). Server-side rendering (SSR). Retrieved from"
-
-[252]: https://nodejs.org/en/ "Node.js Official Website. (n.d. ). Node.js. Retrieved from"
-
-[253]: https://react.dev/ "React Official Website. (n.d. ). React – A JavaScript library for building user interfaces. Retrieved from"
-
-[254]: https://vuejs.org/ "Vue.js Official Website. (n.d. ). Vue.js. Retrieved from"
-
-[255]: https://angular.io/ "Angular Official Website. (n.d. ). Angular. Retrieved from"
-
-[256]: https://nodejs.org/docs/latest/api/http.html "http Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[257]: https://nodejs.org/docs/latest/api/events.html "events Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[258]: https://expressjs.com/ "express Official Website. (n.d. ). Express - Node.js web application framework. Retrieved from"
-
-[259]: https://github.com/auth0/node-jsonwebtoken "jwt GitHub Repository. (n.d. ). auth0/node-jsonwebtoken. Retrieved from"
-
-[260]: https://nodejs.org/docs/latest/api/fs.html "fs Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[261]: https://github.com/websockets/ws "ws GitHub Repository. (n.d. ). websockets/ws. Retrieved from"
-
-[262]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat "Array.prototype.flat( ) MDN Web Docs. (n.d.). Array.prototype.flat(). Retrieved from"
-
-[263]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map "Map MDN Web Docs. (n.d. ). Map. Retrieved from"
-
-[264]: https://developer.mozilla.org/en-US/docs/Web/API/setTimeout "setTimeout MDN Web Docs. (n.d. ). setTimeout(). Retrieved from"
-
-[265]: https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout "clearTimeout MDN Web Docs. (n.d. ). clearTimeout(). Retrieved from"
-
-[266]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise "Promise MDN Web Docs. (n.d. ). Promise. Retrieved from"
-
-[267]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function "async function MDN Web Docs. (n.d. ). async function. Retrieved from"
-
-[268]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await "await MDN Web Docs. (n.d. ). await. Retrieved from"
-
-[269]: https://nodejs.org/docs/latest/api/process.html#processargv "process.argv Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[270]: https://github.com/tj/commander.js "commander.js GitHub Repository. (n.d. ). tj/commander.js. Retrieved from"
-
-[271]: https://github.com/yargs/yargs "yargs GitHub Repository. (n.d. ). yargs/yargs. Retrieved from"
-
-[272]: https://en.wikipedia.org/wiki/STAR_method "STAR Method Wikipedia. (n.d. ). STAR method. Retrieved from"
-
-[273]: https://eslint.org/ "ESLint Official Website. (n.d. ). ESLint - Pluggable JavaScript linter. Retrieved from"
-
-[274]: https://prettier.io/ "Prettier Official Website. (n.d. ). Prettier - Opinionated Code Formatter. Retrieved from"
-
-[275]: https://www.typescriptlang.org/ "TypeScript Official Website. (n.d. ). TypeScript. Retrieved from"
-
-[276]: https://nodejs.org/docs/latest/api/inspector.html "Node.js Inspector Node.js Documentation. (n.d. ). Node.js v20.x Documentation. Retrieved from"
-
-[277]: https://expressjs.com/ "Express.js Official Website. (n.d. ). Express - Node.js web application framework. Retrieved from"
-
-[278]: https://socket.io/ "socket.io Official Website. (n.d. ). Socket.IO. Retrieved from"
-
-[279]: https://mongoosejs.com/docs/ "Mongoose Official Documentation. (n.d. ). Mongoose ODM. Retrieved from"
-
-[280]: https://kubernetes.io/docs/home/ "Kubernetes Official Website. (n.d. ). Kubernetes. Retrieved from"
-
-[281]: https://pm2.keymetrics.io/ "PM2 Official Website. (n.d. ). PM2 - Production Process Manager for Node.js apps. Retrieved from"
-
-[282]: https://redis.io/ "Redis Official Website. (n.d. ). Redis. Retrieved from"
-
-[283]: https://en.wikipedia.org/wiki/Content_delivery_network "CDN Wikipedia. (n.d. ). Content delivery network. Retrieved from"
-
-[284]: https://www.nginx.com/ "Nginx Official Website. (n.d. ). Nginx. Retrieved from"
-
-[285]: https://www.rabbitmq.com/ "RabbitMQ Official Website. (n.d. ). RabbitMQ. Retrieved from"
-
-[286]: https://kafka.apache.org/ "Apache Kafka Official Website. (n.d. ). Apache Kafka. Retrieved from"
-
-[287]: https://aws.amazon.com/sqs/ "AWS SQS Official Website. (n.d. ). Amazon SQS. Retrieved from"
-
-[288]: https://istio.io/ "Istio Official Website. (n.d. ). Istio. Retrieved from"
-
-[289]: https://linkerd.io/ "Linkerd Official Website. (n.d. ). Linkerd. Retrieved from"
-
-[290]: https://www.hashicorp.com/products/consul "Consul Connect Official Website. (n.d. ). Consul by HashiCorp. Retrieved from"
-
-[291]: https://martinfowler.com/bliki/CircuitBreaker.html "Circuit Breaker Martin Fowler. (2014 ). Circuit Breaker. Retrieved from"
-
-[292]: https://microservices.io/patterns/bulkhead.html "Bulkhead Pattern Microservices.io. (n.d. ). Bulkhead. Retrieved from"
-
-[293]: https://en.wikipedia.org/wiki/Graceful_degradation "Graceful Degradation Wikipedia. (n.d. ). Graceful degradation. Retrieved from"
-
-[294]: https://en.wikipedia.org/wiki/Idempotence "Idempotence Wikipedia. (n.d. ). Idempotence. Retrieved from"
