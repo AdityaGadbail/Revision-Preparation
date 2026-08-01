@@ -14,7 +14,7 @@ This is a complete revision guide for JavaScript interviews, covering everything
 - [Q: What is the event loop in JavaScript?](#q-what-is-the-event-loop-in-javascript)
 
 - [Q: Explain the `this` keyword in JavaScript. How does its value change?](#q-explain-the-this-keyword-in-javascript-how-does-its-value-change)
-
+- 
 - [Q: How do `call`, `apply`, and `bind` work?](#q-how-do-call-apply-and-bind-work)
 
 - [Q: What are arrow functions? What are their limitations compared to regular functions?](#q-what-are-arrow-functions-what-are-their-limitations-compared-to-regular-functions)
