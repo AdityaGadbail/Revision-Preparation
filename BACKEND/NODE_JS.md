@@ -223,7 +223,8 @@ A comprehensive revision guide for Node.js interviews, covering everything from 
 
 ### Explain the Node.js Event Loop.
 
-Answer: The Node.js Event Loop is a core component that handles asynchronous operations. It continuously checks for tasks in the call stack and moves them to the event queue. Once the call stack is empty, it processes tasks from the event queue. This non-blocking I/O model allows Node.js to handle many concurrent connections efficiently without creating a new thread for each.<img src="./images/event_loop.png" width="700" height="1000">
+Answer: The Node.js Event Loop is a core component that handles asynchronous operations. It continuously checks for tasks in the call stack and moves them to the event queue. Once the call stack is empty, it processes tasks from the event queue. This non-blocking I/O model allows Node.js to handle many concurrent connections efficiently without creating a new thread for each.
+<img src="../images/event_loop.png" width="700" height="1000">
 
 ### Difference between process.nextTick() and setImmediate().
 
@@ -316,7 +317,7 @@ Answer:
 
 Answer: Microservices architecture is an architectural style that structures an application as a collection of loosely coupled, independently deployable services. Each service is typically responsible for a specific business capability, communicates with others via lightweight mechanisms (e.g., HTTP APIs, message queues), and can be developed, deployed, and scaled independently. This contrasts with monolithic architectures where all components are tightly coupled.
 
-<img src="images/microservices.png" width="700">
+<img src="../images/microservices.png" width="700">
 
 ### How do you secure a Node.js application?
 
@@ -421,7 +422,7 @@ Answer: Node.js is an open-source, cross-platform JavaScript runtime environment
 
 ### Q: Explain the Node.js Event Loop.
 
-Answer: The Node.js Event Loop is a core component that handles asynchronous operations. It continuously checks for tasks in the call stack and moves them to the event queue. Once the call stack is empty, it processes tasks from the event queue. This non-blocking I/O model allows Node.js to handle many concurrent connections efficiently without creating a new thread for each.<img src="./images/event_loop.png" width="700" height="1000">
+Answer: The Node.js Event Loop is a core component that handles asynchronous operations. It continuously checks for tasks in the call stack and moves them to the event queue. Once the call stack is empty, it processes tasks from the event queue. This non-blocking I/O model allows Node.js to handle many concurrent connections efficiently without creating a new thread for each.<img src="../images/event_loop.png" width="700" height="1000">
 
 ### Q: What is the purpose of `package.json`?
 
