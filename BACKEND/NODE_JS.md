@@ -237,7 +237,7 @@ Answer: CommonJS is a module format used in Node.js for organizing and encapsula
 
 Answer: Streams are an abstract interface in Node.js for working with streaming data. They are a way to handle reading/writing files, network communications, or any kind of end-to-end information exchange in a more efficient manner, especially when dealing with large amounts of data. Streams can be readable, writable, duplex (both readable and writable), or transform (duplex streams that can modify data as it passes through). They reduce memory usage and improve performance by processing data in chunks.
 
-<img src="./images/streams.png" width="700" >
+<img src="../images/streams.png" width="700" >
 
 ### Explain middleware in Express.js.
 
